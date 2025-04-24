@@ -21,12 +21,17 @@ public class Medecin extends User{
 
     private String specialite;
     private Status status;
-
+    private String image;
 
     @OneToMany(mappedBy = "medecin")
     private List<Patient> patients;
 
-
- @ManyToMany
+    @ManyToMany
     private List<Disponibilite> disponibilites;
+
+    @OneToMany(mappedBy = "medecin")
+    private List<RendezVous> rendezVous;
+
+    @OneToMany(mappedBy = "medecin")
+    private List<Notification> notifications;
 }

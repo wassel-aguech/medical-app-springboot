@@ -24,10 +24,20 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
   private final AuthenticationService service;
-  
-  
- 
-  
+
+
+
+
+
+
+  @PostMapping("/registerpatient")
+  public ResponseEntity<Response> registerpatient(
+          @RequestBody @Valid PatientDto userRequest,
+          HttpServletRequest request
+  )  {
+    return service.register(userRequest,request);
+  }
+  /*
   @PostMapping("/registermedecin")
   public ResponseEntity<Response> registermedecin(
           @RequestBody @Valid MedecinDto userRequest,
@@ -36,13 +46,7 @@ public class AuthenticationController {
     return service.register(userRequest,request);
   }
   
-  @PostMapping("/registerpatient")
-  public ResponseEntity<Response> registerpatient(
-          @RequestBody @Valid PatientDto userRequest,
-          HttpServletRequest request
-  )  {
-    return service.register(userRequest,request);
-  }
+
   
   @PostMapping("/registeradmin")
   public ResponseEntity<Response> registeradmin(
@@ -50,7 +54,7 @@ public class AuthenticationController {
           HttpServletRequest request
   )  {
     return service.register(userRequest,request);
-  }
+  }*/
 
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(

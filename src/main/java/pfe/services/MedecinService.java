@@ -1,5 +1,6 @@
 package pfe.services;
 
+import org.springframework.web.multipart.MultipartFile;
 import pfe.dto.MedecinDto;
 
 import java.util.List;
@@ -12,5 +13,8 @@ public interface MedecinService {
     Optional<MedecinDto> getMedecinById(Long id);
     void deleteMedecin( Long id);
     MedecinDto updateMedecin (MedecinDto medecinDto);
+
+    MedecinDto uploadMedecinImage(Long IdMedecin, MultipartFile image);
+
 
 }

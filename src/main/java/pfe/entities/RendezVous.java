@@ -28,10 +28,17 @@ public class RendezVous {
     private Date date;
     private String motif;
 
-    private statusRendezVous status;
+    private Date dateDemande;
+    private Date dateRendezVous;
+
+
+    private statusRendezVous statut;
 
     @ManyToOne()
     private Patient patient;
+
+    @ManyToOne()
+    private Medecin medecin;
 
 
 

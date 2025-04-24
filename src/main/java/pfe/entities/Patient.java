@@ -22,13 +22,15 @@ public class Patient extends User{
 
     private boolean ispatient;
     private String sexe;
-
+    private String image;
 
     @ManyToOne()
     private Medecin medecin;
 
-
     @OneToMany(mappedBy = "patient")
     private List<RendezVous> rendezVous;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Notification> notifications;
 
 }

@@ -2,5 +2,5 @@ package pfe.entities;
 
 public enum statusRendezVous {
 
-    CONFIRME,ANNULE
+    EN_ATTENTE,VALIDE
 }

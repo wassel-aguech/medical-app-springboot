@@ -37,6 +37,8 @@ public class User implements UserDetails {
     @Column
     private String phone;
 
+
+
     @Builder.Default
     private boolean enabled = false;
     @ManyToMany(fetch =FetchType.EAGER)

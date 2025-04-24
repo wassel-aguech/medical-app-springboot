@@ -1,7 +1,11 @@
 package pfe.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pfe.configImage.ImageStorage;
 import pfe.dto.MedecinDto;
 import pfe.entities.Medecin;
 import pfe.repository.MedecinRepository;
@@ -16,6 +20,8 @@ import java.util.stream.Collectors;
 public class MedecinServiceImpl implements MedecinService {
 
     private final MedecinRepository medecinRepository;
+    private final ImageStorage imageStorage;
+
 
     @Override
     public MedecinDto addMedecin(MedecinDto medecinDto) {
@@ -63,5 +69,56 @@ public class MedecinServiceImpl implements MedecinService {
         medecinRepository.save(existing);
         return MedecinDto.toDto(existing);
     }
+
+
+
+
+    public ResponseEntity<Medecin> findbyId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return ResponseEntity.ok(medecinRepository.findById(id).get());
+
+    }
+
+    @Override
+    public MedecinDto uploadMedecinImage(Long IdBlog, MultipartFile image) {
+
+        ResponseEntity<Medecin> medecinResponse = this.findbyId(IdBlog);
+        String imageName=imageStorage.store(image);
+
+        String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/medecinss/downloadblogimage/").path(imageName).toUriString();
+
+        Medecin medecin = medecinResponse.getBody();
+
+        if (medecin!=null)
+            medecin.setImage(fileImageDownloadUrl);
+
+        Medecin blogsaved = medecinRepository.save(medecin);
+        new MedecinDto();
+        return  MedecinDto.toDto(blogsaved);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
