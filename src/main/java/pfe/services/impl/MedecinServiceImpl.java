@@ -52,6 +52,7 @@ public class MedecinServiceImpl implements MedecinService {
     }
 
 
+
     @Override
     public MedecinDto updateMedecin(MedecinDto medecinDto) {
         Medecin existing = medecinRepository.findById(medecinDto.getId())
@@ -64,6 +65,9 @@ public class MedecinServiceImpl implements MedecinService {
         existing.setAdress(medecinDto.getAdress());
         existing.setPhone(medecinDto.getPhone());
         existing.setSpecialite(medecinDto.getSpecialite());
+        existing.setStatus(medecinDto.getStatus());
+        existing.setImage(medecinDto.getImage());
+
 
 
         medecinRepository.save(existing);
@@ -87,7 +91,7 @@ public class MedecinServiceImpl implements MedecinService {
         ResponseEntity<Medecin> medecinResponse = this.findbyId(IdBlog);
         String imageName=imageStorage.store(image);
 
-        String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/medecinss/downloadblogimage/").path(imageName).toUriString();
+        String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/medecins/downloadmedecinimage/").path(imageName).toUriString();
 
         Medecin medecin = medecinResponse.getBody();
 

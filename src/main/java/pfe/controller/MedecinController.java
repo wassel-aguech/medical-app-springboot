@@ -49,8 +49,8 @@ public class MedecinController {
     }
 
 
-    @PutMapping("/update")
-    public ResponseEntity<MedecinDto> updateMedecin(@RequestBody MedecinDto medecinDto) {
+    @PutMapping("/updatemedecin")
+    public ResponseEntity<MedecinDto> updateMedecin( @RequestBody MedecinDto medecinDto) {
         return ResponseEntity.ok(medecinService.updateMedecin(medecinDto));
     }
 
@@ -62,7 +62,7 @@ public class MedecinController {
         return medecinService.uploadMedecinImage(IdMedecin, image);
     }
 
-    @GetMapping("/downloadblogimage/{imageName}")
+    @GetMapping("/downloadmedecinimage/{imageName}")
     public ResponseEntity<Resource> downloadImage(@PathVariable String imageName, HttpServletRequest request) {
         return this.imageStorage.downloadUserImage(imageName, request);
     }
