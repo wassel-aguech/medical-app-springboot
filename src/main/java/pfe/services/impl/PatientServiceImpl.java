@@ -79,7 +79,7 @@ public class PatientServiceImpl  implements PatientService {
         ResponseEntity<Patient> patientResponseEntity = this.findbyId(IdPatient);
         String imageName=imageStorage.store(image);
 
-        String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/patients/downloadblogimage/").path(imageName).toUriString();
+        String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/patients/downloadpatientimage/").path(imageName).toUriString();
 
         Patient patient = patientResponseEntity.getBody();
 

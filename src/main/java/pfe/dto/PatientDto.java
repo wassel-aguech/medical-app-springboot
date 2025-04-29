@@ -15,7 +15,9 @@ import pfe.modelsecurite.RegisterRequest;
 @AllArgsConstructor
 @SuperBuilder
 public class PatientDto extends RegisterRequest {
-	  private boolean ispatient;
+
+	private String sexe;
+	private String image;
 	  
 public static Patient toEntity(PatientDto request) {
 	return  Patient.builder()
@@ -24,6 +26,8 @@ public static Patient toEntity(PatientDto request) {
 			.email(request.getEmail())
 			.password(request.getPassword())
 			.adress(request.getAdress())
+			.sexe(request.getSexe())
+			.image(request.getImage())
 			.phone(request.getPhone())
 			.build();
 
@@ -37,6 +41,8 @@ public static PatientDto toDto(Patient request)
 			.email(request.getEmail())
 			.password(request.getPassword())
 			.adress(request.getAdress())
+			.sexe(request.getSexe())
+			.image(request.getImage())
 			.phone(request.getPhone())
 			.build();
 

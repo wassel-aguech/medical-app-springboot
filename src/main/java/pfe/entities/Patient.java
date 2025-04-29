@@ -20,7 +20,6 @@ import java.util.List;
 @SuperBuilder
 public class Patient extends User{
 
-    private boolean ispatient;
     private String sexe;
     private String image;
 

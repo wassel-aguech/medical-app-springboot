@@ -31,8 +31,10 @@ public class User implements UserDetails {
     private String email;
     @Column
     private String password;
-    @Column
 
+    @Column
+    private String confirmPassword;
+    @Column
     private String adress;
     @Column
     private String phone;

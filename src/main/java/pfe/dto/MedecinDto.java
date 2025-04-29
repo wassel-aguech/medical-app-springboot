@@ -15,6 +15,7 @@ import pfe.modelsecurite.RegisterRequest;
 @AllArgsConstructor
 @SuperBuilder
 public class MedecinDto extends RegisterRequest {
+
 	private String specialite;
 
 

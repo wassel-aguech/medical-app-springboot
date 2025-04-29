@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
-@RequestMapping("/api/v1/patient")
+@RequestMapping("/api/v1/patients")
 @RequiredArgsConstructor
 public class PatientController {
 
@@ -33,10 +33,11 @@ public class PatientController {
         return patientService.addPatient(patientDto);
     }
 
-    @GetMapping("getall")
+    @GetMapping("getallpatients")
     public List<PatientDto> getAllPatient() {
         return patientService.getAllPatient();
     }
+
    @GetMapping("getPatientById/{id}")
     public Optional<PatientDto> getPatientById(@PathVariable Long id) {
         return patientService.getPatientById(id);
@@ -55,14 +56,13 @@ public class PatientController {
 
 
 
-
     @PostMapping(path = "/uploadImage/{IdPatient}" , consumes = MULTIPART_FORM_DATA_VALUE)
-    public PatientDto uploadMedecinImage(@PathVariable("IdPatient")  Long IdPatient,
+    public PatientDto uploadPatientImage(@PathVariable("IdPatient")  Long IdPatient,
                                          @RequestPart(value = "image") MultipartFile image) {
         return patientService.uploadPaientImage(IdPatient, image);
     }
 
-    @GetMapping("/downloadblogimage/{imageName}")
+    @GetMapping("/downloadpatientimage/{imageName}")
     public ResponseEntity<Resource> downloadImage(@PathVariable String imageName, HttpServletRequest request) {
         return this.imageStorage.downloadUserImage(imageName, request);
     }

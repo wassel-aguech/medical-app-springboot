@@ -26,19 +26,15 @@ public class MedecinController {
     private final ImageStorage imageStorage;
 
 
-
-
-    @PostMapping("addPatient")
+    @PostMapping("addMedecin")
     public MedecinDto addMedecin(@RequestBody MedecinDto medecinDto) {
         return medecinService.addMedecin(medecinDto);
     }
-
 
     @GetMapping("/getallmedecins")
     public ResponseEntity<List<MedecinDto>> getAllMedecin() {
         return ResponseEntity.ok(medecinService.getAllMedecin());
     }
-
 
     @GetMapping("/getMedecinById/{id}")
     public ResponseEntity<MedecinDto> getMedecinById(@PathVariable Long id) {
@@ -46,8 +42,7 @@ public class MedecinController {
         return medecin.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deletemedecin/{id}")
     public ResponseEntity<Void> deleteMedecin(@PathVariable Long id) {
         medecinService.deleteMedecin(id);
         return ResponseEntity.noContent().build();

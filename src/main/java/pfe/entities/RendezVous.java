@@ -27,11 +27,8 @@ public class RendezVous {
     @Temporal(TemporalType.DATE)
     private Date date;
     private String motif;
-
     private Date dateDemande;
     private Date dateRendezVous;
-
-
     private statusRendezVous statut;
 
     @ManyToOne()
