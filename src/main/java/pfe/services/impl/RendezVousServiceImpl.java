@@ -1,7 +1,9 @@
 package pfe.services.impl;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import pfe.dto.MedecinDto;
 import pfe.dto.RendezVousDto;
@@ -53,19 +55,17 @@ public class RendezVousServiceImpl  implements RendezVousService {
     }
 
 
-    public RendezVous demanderRendezVous(Long patientId, Long medecinId, String motif, Date dateProposee) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow();
-        Medecin medecin = medecinRepository.findById(medecinId).orElseThrow();
-
-        RendezVous rdv = new RendezVous();
-        rdv.setMotif(motif);
-        rdv.setDateDemande(new Date());
-        rdv.setStatut(statusRendezVous.EN_ATTENTE); // ici
-        rdv.setPatient(patient);
-        rdv.setMedecin(medecin);
-
-        return rendezVousRepository.save(rdv);
+    @Override
+    @Transactional
+    public RendezVousDto DemandeRendezVous(Authentication connectedUser, RendezVousDto rendezVousDto) {
+        Patient patient = ((Patient) connectedUser.getPrincipal());
+        System.out.println(patient.getId());
+        RendezVous rendezVous = RendezVousDto.toEntity(rendezVousDto);
+        rendezVous.setPatient(patient);
+        rendezVous = rendezVousRepository.save(rendezVous);
+        return RendezVousDto.toDto(rendezVous);
     }
+
 
 
     public RendezVous validerRendezVous(Long rdvId, Date dateFinale) {

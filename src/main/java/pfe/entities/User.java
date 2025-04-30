@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
 
     @Builder.Default
-    private boolean enabled = false;
+    private boolean enabled = true;
     @ManyToMany(fetch =FetchType.EAGER)
     private List<Role> roles;
     @OneToMany(mappedBy ="user",cascade = CascadeType.ALL)

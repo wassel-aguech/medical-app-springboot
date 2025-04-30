@@ -25,7 +25,7 @@ public class RendezVous {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date dateEnvoi;
     private String motif;
     private Date dateDemande;
     private Date dateRendezVous;

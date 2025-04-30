@@ -25,18 +25,25 @@ public class RendezVousDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date dateEnvoi;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date dateDemande;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+
+    private Date dateRendezVous;
+    private statusRendezVous statut;
     private String motif;
 
-    private statusRendezVous status;
 
 
     private Long patientid;
+    private Long medecinid;
 
 
      public  static RendezVous toEntity(RendezVousDto rendezVousDTO){
          return  RendezVous.builder()
-                 .date(rendezVousDTO.getDate())
                  .motif(rendezVousDTO.getMotif())
                  .build();
      }
@@ -44,7 +51,6 @@ public class RendezVousDto {
 
     public  static RendezVousDto  toDto(RendezVous rendezVous){
         return  RendezVousDto.builder()
-                .date(rendezVous.getDate())
                 .motif(rendezVous.getMotif())
                 .patientid(rendezVous.getPatient().getId())
                 .build();
