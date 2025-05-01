@@ -21,7 +21,7 @@ import java.util.Date;
 public class RendezVousDto {
 
 
-   private int id;
+   private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
@@ -37,22 +37,36 @@ public class RendezVousDto {
     private String motif;
 
 
-
     private Long patientid;
     private Long medecinid;
+    private String medecinName;
 
 
-     public  static RendezVous toEntity(RendezVousDto rendezVousDTO){
+     public  static RendezVous toEntity(RendezVousDto rendezVousDto){
          return  RendezVous.builder()
-                 .motif(rendezVousDTO.getMotif())
+                 .id(rendezVousDto.getId())
+                 .motif(rendezVousDto.getMotif())
+                 .dateEnvoi(rendezVousDto.getDateEnvoi())
+                 .dateDemande(rendezVousDto.getDateDemande())
+                 .dateRendezVous(rendezVousDto.getDateRendezVous())
+                 .statut(rendezVousDto.getStatut())
                  .build();
      }
 
 
     public  static RendezVousDto  toDto(RendezVous rendezVous){
         return  RendezVousDto.builder()
+                .id(rendezVous.getId())
                 .motif(rendezVous.getMotif())
+                .dateEnvoi(rendezVous.getDateEnvoi())
+                .dateDemande(rendezVous.getDateDemande())
+                .dateRendezVous(rendezVous.getDateRendezVous())
+                .statut(rendezVous.getStatut())
+
                 .patientid(rendezVous.getPatient().getId())
+                .medecinid(rendezVous.getMedecin().getId())
+                .medecinName(rendezVous.getMedecin().getFirstName())
+
                 .build();
     }
 

@@ -19,6 +19,13 @@ public interface RendezVousService {
 
     RendezVousDto DemandeRendezVous(Authentication connectedUser, RendezVousDto rendezVousDto);
     List<RendezVous> getDemandesPourMedecin(Long medecinId);
-    RendezVous validerRendezVous(Long rdvId, Date dateFinale);
+    //RendezVous validerRendezVous(Long rdvId, Date dateFinale);
+
+
+
+    List<RendezVousDto> getRendezVousByPatientId(Long patientId);
+    List<RendezVousDto> getRendezVousByMedecinId(Long medecinId);
+
+
 
 }

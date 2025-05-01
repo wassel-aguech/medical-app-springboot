@@ -6,8 +6,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pfe.dto.DemandeRendezVousDto;
 import pfe.dto.RendezVousDto;
+import pfe.dto.ReponseRendezVousDto;
 import pfe.dto.ValidationDto;
 import pfe.entities.RendezVous;
+import pfe.entities.statusRendezVous;
+import pfe.repository.RendezVousRepository;
 import pfe.services.RendezVousService;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 public class RendezVousController {
 
     private final RendezVousService rendezVousService;
+    private final RendezVousRepository rendezVousRepository;
 
     @PostMapping("/addRendezVous")
     public ResponseEntity<RendezVousDto> addRendezVous(Authentication connectedUser  , @RequestBody RendezVousDto rendezVousDto) {
@@ -28,14 +32,58 @@ public class RendezVousController {
     }
 
 
-    @PutMapping("/valider/{id}")
-    public ResponseEntity<RendezVous> validerRendezVous(@PathVariable Long id, @RequestBody ValidationDto dto) {
-        RendezVous rdv = rendezVousService.validerRendezVous(id, dto.getDateRendezVous());
-        return ResponseEntity.ok(rdv);
-    }
-
     @GetMapping("/medecin/{id}")
     public ResponseEntity<List<RendezVous>> getDemandes(@PathVariable Long id) {
         return ResponseEntity.ok(rendezVousService.getDemandesPourMedecin(id));
     }
+
+
+    @GetMapping("/getrendezvousbypatientid/{patientId}")
+    public ResponseEntity<List<RendezVousDto>> getRendezVousByPatient(@PathVariable Long patientId) {
+        List<RendezVousDto> rendezVousList = rendezVousService.getRendezVousByPatientId(patientId);
+        return ResponseEntity.ok(rendezVousList);
+    }
+
+
+
+    @GetMapping("/getrendezvousbymedecinid/{medecinId}")
+    public ResponseEntity<List<RendezVousDto>> getRendezVousByMedecin(@PathVariable Long medecinId) {
+        List<RendezVousDto> rendezVousList = rendezVousService.getRendezVousByMedecinId(medecinId);
+        return ResponseEntity.ok(rendezVousList);
+    }
+
+
+
+
+    @PutMapping("/rendezvous/{id}/repondre")
+    public ResponseEntity<RendezVousDto> repondreRendezVous(
+            @PathVariable Long id,
+            @RequestBody ReponseRendezVousDto reponseDto
+    ) {
+        RendezVous rendezVous = rendezVousRepository.findById(id).orElseThrow();
+
+        rendezVous.setDateRendezVous(reponseDto.getDateRendezVous());
+        rendezVous.setMotif(reponseDto.getMotif());
+        rendezVous.setStatut(statusRendezVous.VALIDE);
+
+        RendezVous updated = rendezVousRepository.save(rendezVous);
+        return ResponseEntity.ok(RendezVousDto.toDto(updated));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

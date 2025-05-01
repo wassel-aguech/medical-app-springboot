@@ -32,9 +32,11 @@ public class RendezVous {
     private statusRendezVous statut;
 
     @ManyToOne()
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne()
+    @JoinColumn(name = "medecin_id")
     private Medecin medecin;
 
 

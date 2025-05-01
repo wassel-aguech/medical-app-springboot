@@ -1,6 +1,7 @@
 package pfe.services.impl;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,6 @@ public class RendezVousServiceImpl  implements RendezVousService {
 
     private final RendezVousRepository rendezVousRepository;
     private final MedecinRepository medecinRepository;
-    private final PatientRepository patientRepository;
 
     @Override
     public RendezVousDto addRendezVous(RendezVousDto rendezVousDto) {
@@ -59,31 +59,53 @@ public class RendezVousServiceImpl  implements RendezVousService {
     @Transactional
     public RendezVousDto DemandeRendezVous(Authentication connectedUser, RendezVousDto rendezVousDto) {
         Patient patient = ((Patient) connectedUser.getPrincipal());
-        System.out.println(patient.getId());
+
         RendezVous rendezVous = RendezVousDto.toEntity(rendezVousDto);
         rendezVous.setPatient(patient);
+
+        Medecin medecin = medecinRepository.findById(rendezVousDto.getMedecinid())
+                .orElseThrow(() -> new EntityNotFoundException("Médecin introuvable"));
+
+        rendezVous.setMedecin(medecin);
+        rendezVous.setDateEnvoi(new Date());
+        rendezVous.setStatut(statusRendezVous.EN_ATTENTE);
+
         rendezVous = rendezVousRepository.save(rendezVous);
+
         return RendezVousDto.toDto(rendezVous);
     }
 
 
-
-    public RendezVous validerRendezVous(Long rdvId, Date dateFinale) {
-        RendezVous rdv = rendezVousRepository.findById(rdvId).orElseThrow();
-        rdv.setDateRendezVous(dateFinale);
-        rdv.setStatut(statusRendezVous.VALIDE); // ici
-        return rendezVousRepository.save(rdv);
-    }
-
+    /*
+        public RendezVous validerRendezVous(Long rdvId, Date dateFinale) {
+            RendezVous rdv = rendezVousRepository.findById(rdvId).orElseThrow();
+            rdv.setDateRendezVous(dateFinale);
+            rdv.setStatut(statusRendezVous.VALIDE); // ici
+            return rendezVousRepository.save(rdv);
+        }
+    */
     public List<RendezVous> getDemandesPourMedecin(Long medecinId) {
         return rendezVousRepository.findByMedecinId(medecinId);
     }
 
 
+    @Override
+    public List<RendezVousDto> getRendezVousByPatientId(Long patientId) {
+        return rendezVousRepository.findRendezVousByPatientId(patientId)
+                .stream()
+                .map(RendezVousDto::toDto)
+                .collect(Collectors.toList());
 
 
+    }
+
+    @Override
+    public List<RendezVousDto> getRendezVousByMedecinId(Long medecinId) {
+        return rendezVousRepository.findRendezVousByMedecinId(medecinId)
+                .stream()
+                .map(RendezVousDto::toDto)
+                .collect(Collectors.toList());
 
 
-
-
+    }
 }
