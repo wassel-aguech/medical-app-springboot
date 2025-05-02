@@ -58,7 +58,7 @@ if (userExists) {
            .build());
 }
 //parent
-if (userRequest instanceof AdminDto) {
+/* if (userRequest instanceof AdminDto) {
    User user = new Admin();
    user = AdminDto.toEntity((AdminDto) userRequest);
    user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -82,18 +82,19 @@ if (userRequest instanceof AdminDto) {
    user.setRoles(roles);
    var savedUser = repository.save(user);
    ///publisher.publishEvent(new RegistrationCompleteEvent(savedUser, applicationUrl(request)));
-
+  System.err.println(savedUser.getId());
    return new ResponseEntity<>(
            Response.builder()
 
                    .responseMessage("Success! Please, check your email to complete your registration")
                    .email(savedUser.getEmail())
+                   .id(savedUser.getId())
                    .build(),
            HttpStatus.CREATED
    );
-}
+}*/
 //eleve
-if (userRequest instanceof MedecinDto) {
+/*if (userRequest instanceof MedecinDto) {
 
     User user = new Medecin();
 
@@ -133,7 +134,7 @@ if (userRequest instanceof MedecinDto) {
 	                   .build(),
 	           HttpStatus.CREATED
 	   );
-	}
+	}*/
 //pro
 //agent
 if (userRequest instanceof PatientDto) {
@@ -167,13 +168,11 @@ if (userRequest instanceof PatientDto) {
 
 	                   .responseMessage("Success! Please, check your email to complete your registration")
 	                   .email(savedUser.getEmail())
+                       .id(savedUser.getId())
 	                   .build(),
 	           HttpStatus.CREATED
 	   );
 	}
-
-
-
 
     return null;
   }

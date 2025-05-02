@@ -37,6 +37,8 @@ public class AuthenticationController {
   )  {
     return service.register(userRequest,request);
   }
+
+
   /*
   @PostMapping("/registermedecin")
   public ResponseEntity<Response> registermedecin(

@@ -17,7 +17,7 @@ public interface PatientService {
     Optional<PatientDto> getPatientById(Long id);
     void deletePatient(Long id);
     PatientDto updatePatient (PatientDto patientdto);
-    PatientDto uploadPaientImage(Long IdPatient, MultipartFile image);
+    PatientDto uploadPaientImage(Long idPatient, MultipartFile image);
 
 
 

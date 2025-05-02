@@ -74,9 +74,9 @@ public class PatientServiceImpl  implements PatientService {
     }
 
     @Override
-    public PatientDto uploadPaientImage(Long IdPatient, MultipartFile image) {
+    public PatientDto uploadPaientImage(Long idPatient, MultipartFile image) {
 
-        ResponseEntity<Patient> patientResponseEntity = this.findbyId(IdPatient);
+        ResponseEntity<Patient> patientResponseEntity = this.findbyId(idPatient);
         String imageName=imageStorage.store(image);
 
         String fileImageDownloadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/patients/downloadpatientimage/").path(imageName).toUriString();

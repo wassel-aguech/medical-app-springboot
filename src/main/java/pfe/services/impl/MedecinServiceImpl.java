@@ -2,17 +2,22 @@ package pfe.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pfe.configImage.ImageStorage;
 import pfe.dto.MedecinDto;
 import pfe.entities.Medecin;
+import pfe.entities.Role;
 import pfe.repository.MedecinRepository;
+import pfe.repository.RoleRepository;
 import pfe.services.MedecinService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,11 +26,28 @@ public class MedecinServiceImpl implements MedecinService {
 
     private final MedecinRepository medecinRepository;
     private final ImageStorage imageStorage;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+
 
 
     @Override
     public MedecinDto addMedecin(MedecinDto medecinDto) {
         Medecin medecin = MedecinDto.toEntity(medecinDto);
+
+        String encodedPassword = passwordEncoder.encode(medecin.getPassword());
+        medecin.setPassword(encodedPassword);
+
+
+        List<Role> roles = new ArrayList<>();
+
+            Role userRole = roleRepository.findByName("medecin")
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+
+        medecin.setRoles(roles);
+
+
         medecin = medecinRepository.save(medecin);
         return MedecinDto.toDto(medecin);
     }

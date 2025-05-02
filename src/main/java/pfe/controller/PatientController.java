@@ -56,10 +56,10 @@ public class PatientController {
 
 
 
-    @PostMapping(path = "/uploadImage/{IdPatient}" , consumes = MULTIPART_FORM_DATA_VALUE)
-    public PatientDto uploadPatientImage(@PathVariable("IdPatient")  Long IdPatient,
+    @PostMapping(path = "/uploadImage/{idPatient}" , consumes = MULTIPART_FORM_DATA_VALUE)
+    public PatientDto uploadPatientImage(@PathVariable("idPatient")  Long idPatient,
                                          @RequestPart(value = "image") MultipartFile image) {
-        return patientService.uploadPaientImage(IdPatient, image);
+        return patientService.uploadPaientImage(idPatient, image);
     }
 
     @GetMapping("/downloadpatientimage/{imageName}")
