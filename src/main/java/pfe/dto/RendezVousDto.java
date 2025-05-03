@@ -40,9 +40,11 @@ public class RendezVousDto {
     private Long patientid;
     private Long medecinid;
     private String medecinName;
+    private String patientName;
 
 
-     public  static RendezVous toEntity(RendezVousDto rendezVousDto){
+
+ public  static RendezVous toEntity(RendezVousDto rendezVousDto){
          return  RendezVous.builder()
                  .id(rendezVousDto.getId())
                  .motif(rendezVousDto.getMotif())
@@ -66,6 +68,7 @@ public class RendezVousDto {
                 .patientid(rendezVous.getPatient().getId())
                 .medecinid(rendezVous.getMedecin().getId())
                 .medecinName(rendezVous.getMedecin().getFirstName())
+                .patientName(rendezVous.getPatient().getFirstName())
 
                 .build();
     }

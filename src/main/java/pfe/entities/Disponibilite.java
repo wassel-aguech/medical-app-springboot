@@ -1,6 +1,7 @@
 package pfe.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -23,11 +26,13 @@ public class Disponibilite {
     private Long id;
 
     private String jour;
-    private String heureDebur;
-    private String heureFin;
+    @JsonFormat(pattern = "HH:mm")
+    private Date heureDebut;
+    @JsonFormat(pattern = "HH:mm")
+    private Date heureFin;
 
 
-    @ManyToMany
-    private List<Medecin> medecins;
+    @ManyToOne
+    private Medecin medecin;
 
 }

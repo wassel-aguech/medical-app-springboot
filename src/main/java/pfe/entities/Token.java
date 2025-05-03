@@ -1,5 +1,7 @@
 package pfe.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +35,7 @@ public class Token {
 
  @ManyToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
  @JoinColumn(name = "user_id" )
+
  public User user;
 }
 

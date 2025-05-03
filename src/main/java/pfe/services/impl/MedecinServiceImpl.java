@@ -38,15 +38,11 @@ public class MedecinServiceImpl implements MedecinService {
         String encodedPassword = passwordEncoder.encode(medecin.getPassword());
         medecin.setPassword(encodedPassword);
 
-
         List<Role> roles = new ArrayList<>();
-
             Role userRole = roleRepository.findByName("medecin")
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-
         medecin.setRoles(roles);
-
 
         medecin = medecinRepository.save(medecin);
         return MedecinDto.toDto(medecin);

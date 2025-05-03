@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import pfe.entities.Etat;
 import pfe.entities.Medecin;
 import pfe.entities.Status;
 import pfe.modelsecurite.RegisterRequest;
@@ -19,6 +20,7 @@ public class MedecinDto extends RegisterRequest {
 
 	private String specialite;
 	private Status status;
+	private Etat etat;
 	private String image;
 
 
@@ -35,6 +37,7 @@ public class MedecinDto extends RegisterRequest {
 				.specialite(request.getSpecialite())
 				.image(request.getImage())
 				.status(request.getStatus())
+				.etat(request.getEtat())
 				.build();
 
 	}
@@ -51,6 +54,7 @@ public class MedecinDto extends RegisterRequest {
 				.phone(request.getPhone())
 				.image(request.getImage())
 				.status(request.getStatus())
+				.etat(request.getEtat())
 				
 				.build();
 

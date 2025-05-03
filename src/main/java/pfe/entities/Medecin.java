@@ -1,8 +1,7 @@
 package pfe.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import jdk.jshell.Snippet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,13 +19,20 @@ import java.util.List;
 public class Medecin extends User{
 
     private String specialite;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Etat etat;
+
     private String image;
 
     @OneToMany(mappedBy = "medecin")
     private List<Patient> patients;
 
-    @ManyToMany
+    @OneToMany
     private List<Disponibilite> disponibilites;
 
     @OneToMany(mappedBy = "medecin")

@@ -1,6 +1,7 @@
 package pfe.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -44,7 +45,7 @@ public class User implements UserDetails {
     private boolean enabled = true;
     @ManyToMany(fetch =FetchType.EAGER)
     private List<Role> roles;
-    @OneToMany(mappedBy ="user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="user",cascade = CascadeType.ALL )
 
     private List<Token> tokens;
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)

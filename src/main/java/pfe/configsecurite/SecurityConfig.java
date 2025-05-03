@@ -40,6 +40,8 @@ public class SecurityConfig {
            "/api/v1/patients/**",
            "api/v1/rendezvous/**",
            "api/v1/medecins/**",
+           "api/v1/disponibilites/**",
+
            "/swagger-ui.html"};
    private final JwtAuthenticationFilter jwtAuthFilter;
    private final AuthenticationProvider authenticationProvider;

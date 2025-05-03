@@ -28,4 +28,6 @@ public interface RendezVousService {
 
 
 
+    List<RendezVousDto> getRendezVousValidesByPatient(Long patientId);
+
 }

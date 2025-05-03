@@ -14,6 +14,7 @@ import pfe.repository.RendezVousRepository;
 import pfe.services.RendezVousService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -61,7 +62,6 @@ public class RendezVousController {
             @RequestBody ReponseRendezVousDto reponseDto
     ) {
         RendezVous rendezVous = rendezVousRepository.findById(id).orElseThrow();
-
         rendezVous.setDateRendezVous(reponseDto.getDateRendezVous());
         rendezVous.setMotif(reponseDto.getMotif());
         rendezVous.setStatut(statusRendezVous.VALIDE);
@@ -71,11 +71,10 @@ public class RendezVousController {
     }
 
 
-
-
-
-
-
+    @GetMapping("/valide/patient/{id}")
+    public List<RendezVousDto> getRendezVousValides(@PathVariable Long id) {
+        return rendezVousService.getRendezVousValidesByPatient(id);
+    }
 
 
 

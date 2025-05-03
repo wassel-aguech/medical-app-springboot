@@ -108,4 +108,13 @@ public class RendezVousServiceImpl  implements RendezVousService {
 
 
     }
+
+    @Override
+    public List<RendezVousDto> getRendezVousValidesByPatient(Long patientId) {
+        return rendezVousRepository.findRendezVousValidesByPatientId(patientId)
+                .stream()
+                .map(RendezVousDto::toDto)
+                .collect(Collectors.toList());
+    }
+
 }
