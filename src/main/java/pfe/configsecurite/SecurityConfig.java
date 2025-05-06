@@ -38,9 +38,13 @@ public class SecurityConfig {
            "/webjars/**",
            "/api/v1/admins/**",
            "/api/v1/patients/**",
-           "api/v1/rendezvous/**",
-           "api/v1/medecins/**",
-           "api/v1/disponibilites/**",
+           "/api/v1/rendezvous/**",
+           "/api/v1/medecins/**",
+           "/api/v1/disponibilites/**",
+           "/api/v1/notifications/**",
+           "/api/v1/test/**",
+
+
 
            "/swagger-ui.html"};
    private final JwtAuthenticationFilter jwtAuthFilter;

@@ -77,7 +77,11 @@ public class RendezVousController {
     }
 
 
-
+    @GetMapping("/rendezvoustoday/{medecinId}")
+    public ResponseEntity<List<RendezVousDto>> getTodayRendezVousByMedecin(@PathVariable Long medecinId) {
+        List<RendezVousDto> result = rendezVousService.getRendezVousTodayByMedecin(medecinId);
+        return ResponseEntity.ok(result);
+    }
 
 
 

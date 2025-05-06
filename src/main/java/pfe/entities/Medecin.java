@@ -38,6 +38,5 @@ public class Medecin extends User{
     @OneToMany(mappedBy = "medecin")
     private List<RendezVous> rendezVous;
 
-    @OneToMany(mappedBy = "medecin")
-    private List<Notification> notifications;
+
 }

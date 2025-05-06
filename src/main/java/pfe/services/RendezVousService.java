@@ -30,4 +30,7 @@ public interface RendezVousService {
 
     List<RendezVousDto> getRendezVousValidesByPatient(Long patientId);
 
+
+    List<RendezVousDto> getRendezVousTodayByMedecin(Long medecinId);
+
 }

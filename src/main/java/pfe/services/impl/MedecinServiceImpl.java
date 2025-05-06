@@ -8,16 +8,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pfe.configImage.ImageStorage;
 import pfe.dto.MedecinDto;
+import pfe.dto.RendezVousDto;
 import pfe.entities.Medecin;
+import pfe.entities.RendezVous;
 import pfe.entities.Role;
 import pfe.repository.MedecinRepository;
+import pfe.repository.RendezVousRepository;
 import pfe.repository.RoleRepository;
 import pfe.services.MedecinService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +30,7 @@ public class MedecinServiceImpl implements MedecinService {
     private final ImageStorage imageStorage;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final RendezVousRepository  rendezVousRepository;
 
 
 
@@ -71,7 +74,7 @@ public class MedecinServiceImpl implements MedecinService {
 
 
 
-    @Override
+   /* @Override
     public MedecinDto updateMedecin(MedecinDto medecinDto) {
         Medecin existing = medecinRepository.findById(medecinDto.getId())
                 .orElseThrow(() -> new RuntimeException("Médecin non trouvé"));
@@ -90,7 +93,45 @@ public class MedecinServiceImpl implements MedecinService {
 
         medecinRepository.save(existing);
         return MedecinDto.toDto(existing);
+    }*/
+
+    @Override
+    public MedecinDto updateMedecin(MedecinDto medecinDto) {
+        Medecin existing = medecinRepository.findById(medecinDto.getId())
+                .orElseThrow(() -> new RuntimeException("Médecin non trouvé"));
+
+        if (medecinDto.getFirstName() != null) {
+            existing.setFirstName(medecinDto.getFirstName());
+        }
+        if (medecinDto.getLastName() != null) {
+            existing.setLastName(medecinDto.getLastName());
+        }
+        if (medecinDto.getEmail() != null) {
+            existing.setEmail(medecinDto.getEmail());
+        }
+        if (medecinDto.getPassword() != null) {
+            existing.setPassword(medecinDto.getPassword());
+        }
+        if (medecinDto.getAdress() != null) {
+            existing.setAdress(medecinDto.getAdress());
+        }
+        if (medecinDto.getPhone() != null) {
+            existing.setPhone(medecinDto.getPhone());
+        }
+        if (medecinDto.getSpecialite() != null) {
+            existing.setSpecialite(medecinDto.getSpecialite());
+        }
+        if (medecinDto.getStatus() != null) {
+            existing.setStatus(medecinDto.getStatus());
+        }
+        if (medecinDto.getImage() != null) {
+            existing.setImage(medecinDto.getImage());
+        }
+
+        medecinRepository.save(existing);
+        return MedecinDto.toDto(existing);
     }
+
 
 
 
@@ -120,6 +161,7 @@ public class MedecinServiceImpl implements MedecinService {
         new MedecinDto();
         return  MedecinDto.toDto(blogsaved);
     }
+
 
 
 

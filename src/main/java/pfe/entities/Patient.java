@@ -29,7 +29,4 @@ public class Patient extends User{
     @OneToMany(mappedBy = "patient")
     private List<RendezVous> rendezVous;
 
-    @OneToMany(mappedBy = "patient")
-    private List<Notification> notifications;
-
 }

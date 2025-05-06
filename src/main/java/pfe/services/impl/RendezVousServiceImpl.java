@@ -4,20 +4,21 @@ package pfe.services.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import pfe.dto.MedecinDto;
 import pfe.dto.RendezVousDto;
-import pfe.entities.Medecin;
-import pfe.entities.Patient;
-import pfe.entities.RendezVous;
+import pfe.entities.*;
 import pfe.repository.MedecinRepository;
 import pfe.repository.PatientRepository;
 import pfe.repository.RendezVousRepository;
 import pfe.services.RendezVousService;
-import pfe.entities.statusRendezVous;
+import pfe.websocket.NotificationService;
 
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,8 @@ public class RendezVousServiceImpl  implements RendezVousService {
 
     private final RendezVousRepository rendezVousRepository;
     private final MedecinRepository medecinRepository;
+    private final NotificationService notificationService;
+
 
     @Override
     public RendezVousDto addRendezVous(RendezVousDto rendezVousDto) {
@@ -71,6 +74,10 @@ public class RendezVousServiceImpl  implements RendezVousService {
         rendezVous.setStatut(statusRendezVous.EN_ATTENTE);
 
         rendezVous = rendezVousRepository.save(rendezVous);
+
+
+        String message = "Vous avez une nouvelle demande de rendez-vous de la part du patient : " + patient.getFirstName() + " " + patient.getLastName();
+        notificationService.sendNotification(medecin.getId(), message);
 
         return RendezVousDto.toDto(rendezVous);
     }
@@ -116,5 +123,35 @@ public class RendezVousServiceImpl  implements RendezVousService {
                 .map(RendezVousDto::toDto)
                 .collect(Collectors.toList());
     }
+
+
+
+
+    @Override
+    public List<RendezVousDto> getRendezVousTodayByMedecin(Long medecinId) {
+        // Calcul début et fin de journée
+        LocalDate today = LocalDate.now();
+        ZoneId zone = ZoneId.systemDefault();
+
+        Date startOfDay = Date.from(today.atStartOfDay(zone).toInstant());
+        Date endOfDay = Date.from(today.plusDays(1).atStartOfDay(zone).toInstant());
+
+        // Requête dans l'intervalle
+        List<RendezVous> rendezVousList = rendezVousRepository
+                .findByMedecinIdAndDateEnvoiBetween(medecinId, startOfDay, endOfDay);
+
+        // Conversion en DTO
+        return rendezVousList.stream()
+                .map(RendezVousDto::toDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
 
 }

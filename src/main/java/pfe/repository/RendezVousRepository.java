@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pfe.entities.RendezVous;
 
+import java.util.Date;
 import java.util.List;
 
 public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
@@ -25,5 +26,8 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
     @Query("SELECT r FROM RendezVous r WHERE r.patient.id = :patientId AND r.statut = 1 ")
     List<RendezVous> findRendezVousValidesByPatientId(@Param("patientId") Long patientId);
 
+
+
+        List<RendezVous> findByMedecinIdAndDateEnvoiBetween(Long medecinId, Date start, Date end);
 
 }
