@@ -2,9 +2,13 @@ package pfe.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import pfe.entities.Notification;
 import pfe.websocket.NotificationService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/notifications")
@@ -37,5 +41,22 @@ public class NotficationController {
         });
 
         return emitter;
+    }
+
+
+
+    @PutMapping("/{id}/read")
+    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
+        notificationService.markAsRead(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+    @GetMapping("/all/{medecinId}")
+    public ResponseEntity<List<Notification>> getAllByMedecin(@PathVariable Long medecinId) {
+        List<Notification> list = notificationService.getAllNotificationsByMedecin(medecinId);
+        return ResponseEntity.ok(list);
     }
 }
