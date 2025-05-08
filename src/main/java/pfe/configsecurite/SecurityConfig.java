@@ -43,10 +43,13 @@ public class SecurityConfig {
            "/api/v1/disponibilites/**",
            "/api/v1/notifications/**",
            "/api/v1/test/**",
+           "/swagger-ui.html",
+           "/ws-chat/**",
+           "/app/chat.sendMessage"
 
 
 
-           "/swagger-ui.html"};
+   };
    private final JwtAuthenticationFilter jwtAuthFilter;
    private final AuthenticationProvider authenticationProvider;
    private final LogoutHandler logoutHandler;

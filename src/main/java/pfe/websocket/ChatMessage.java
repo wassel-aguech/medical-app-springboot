@@ -1,4 +1,4 @@
-package pfe.entities;
+package pfe.websocket;
 
 
 import jakarta.persistence.*;
@@ -16,23 +16,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Message {
+public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    private Long senderId;
-    private Long receiverId;
-    private String senderName;
+    private String sender;
     private String content;
-    private String timestamp;
-
-
-    @ManyToOne
-    private Conversation conversation;
-
+    private String receiver;
+    private Date timestamp;
 
 
 

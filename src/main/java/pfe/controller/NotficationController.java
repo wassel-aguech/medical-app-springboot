@@ -53,7 +53,6 @@ public class NotficationController {
 
 
 
-
     @GetMapping("/all/{medecinId}")
     public ResponseEntity<List<Notification>> getAllByMedecin(@PathVariable Long medecinId) {
         List<Notification> list = notificationService.getAllNotificationsByMedecin(medecinId);
