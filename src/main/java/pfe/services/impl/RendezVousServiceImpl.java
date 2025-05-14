@@ -75,8 +75,8 @@ public class RendezVousServiceImpl  implements RendezVousService {
 
         rendezVous = rendezVousRepository.save(rendezVous);
 
-        String message = "Vous avez une nouvelle demande de rendez-vous de la part du patient : " + patient.getFirstName() + " " + patient.getLastName();
-        notificationService.sendNotification(medecin.getId(), message);
+        String message = "nouvelle demande de rendez-vous du patient : " + patient.getFirstName() + " " + patient.getLastName();
+        notificationService.sendNotification(medecin.getId(), message ,NotificationType.RENDEZVOUS);
 
         return RendezVousDto.toDto(rendezVous);
     }

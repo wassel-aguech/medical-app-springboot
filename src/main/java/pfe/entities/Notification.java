@@ -1,10 +1,7 @@
 package pfe.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +24,8 @@ public class Notification {
     private String message;
     private Date dateEnvoi;
     private boolean lue = false;
+
+
+    @Enumerated(EnumType.STRING)
+    private NotificationType type;
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import pfe.entities.Notification;
+import pfe.entities.NotificationType;
 import pfe.repository.NotificationRepository;
 
 import java.util.*;
@@ -13,27 +14,27 @@ import java.util.*;
 @Service
 public class NotificationService {
 
+
     private final Map<Long, List<SseEmitter>> subscribers = new HashMap<>();
 
     @Autowired
     private NotificationRepository notificationRepository;
 
-    // S'abonner à un médecin
     public void subscribe(Long medecinId, SseEmitter emitter) {
         subscribers.computeIfAbsent(medecinId, k -> new ArrayList<>()).add(emitter);
     }
 
-    // Envoyer une notification à un médecin + l'enregistrer
-    public void sendNotification(Long medecinId, String message) {
-        // Enregistrement en base
+    public void sendNotification(Long medecinId, String message, NotificationType type) {
+
         Notification notification = new Notification();
         notification.setDestinataireId(medecinId);
         notification.setMessage(message);
         notification.setDateEnvoi(new Date());
         notification.setLue(false);
+        notification.setType(type);
+
         notificationRepository.save(notification);
 
-        // Envoi via SSE
         List<SseEmitter> emitters = subscribers.get(medecinId);
         if (emitters != null) {
             for (SseEmitter emitter : emitters) {
@@ -47,8 +48,6 @@ public class NotificationService {
     }
 
 
-
-
     public void markAsRead(Long notificationId) {
         Optional<Notification> notifOpt = notificationRepository.findById(notificationId);
         if (notifOpt.isPresent()) {
@@ -60,6 +59,7 @@ public class NotificationService {
 
     public List<Notification> getAllNotificationsByMedecin(Long medecinId) {
         return notificationRepository.findAllByMedecinId(medecinId);
-    }
-}
 
+    }
+
+}
