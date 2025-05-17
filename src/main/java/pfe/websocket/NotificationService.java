@@ -24,10 +24,10 @@ public class NotificationService {
         subscribers.computeIfAbsent(medecinId, k -> new ArrayList<>()).add(emitter);
     }
 
-    public void sendNotification(Long medecinId, String message, NotificationType type) {
 
+    public void sendNotification(Long destinataireId, String message, NotificationType type) {
         Notification notification = new Notification();
-        notification.setDestinataireId(medecinId);
+        notification.setDestinataireId(destinataireId);
         notification.setMessage(message);
         notification.setDateEnvoi(new Date());
         notification.setLue(false);
@@ -35,16 +35,30 @@ public class NotificationService {
 
         notificationRepository.save(notification);
 
-        List<SseEmitter> emitters = subscribers.get(medecinId);
+        List<SseEmitter> emitters = subscribers.get(destinataireId);
         if (emitters != null) {
             for (SseEmitter emitter : emitters) {
                 try {
-                    emitter.send(message);
+                    // Envoie l'objet Notification complet (pas juste le message)
+                    emitter.send(notification);
+
+                    System.out.println("✅ Notification envoyée à l'utilisateur " + destinataireId + " : " + message);
+
                 } catch (Exception e) {
                     emitter.completeWithError(e);
                 }
+
+
             }
         }
+
+     else {
+        System.out.println("⚠️ Aucun SseEmitter trouvé pour l'utilisateur " + destinataireId);
+    }
+
+
+
+
     }
 
 
@@ -57,9 +71,8 @@ public class NotificationService {
         }
     }
 
-    public List<Notification> getAllNotificationsByMedecin(Long medecinId) {
-        return notificationRepository.findAllByMedecinId(medecinId);
-
+    public List<Notification> getAllNotificationsByDestinataire(Long destinataireId) {
+        return notificationRepository.findAllByDestinataireId(destinataireId);
     }
 
 }

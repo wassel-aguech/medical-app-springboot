@@ -12,5 +12,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
 
     @Query("SELECT n FROM Notification n WHERE n.destinataireId = :medecinId ORDER BY n.dateEnvoi DESC")
-    List<Notification> findAllByMedecinId(@Param("medecinId") Long medecinId);
+    List<Notification> findAllByDestinataireId(@Param("medecinId") Long medecinId);
 }

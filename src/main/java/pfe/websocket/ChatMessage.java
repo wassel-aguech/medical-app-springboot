@@ -28,7 +28,8 @@ public class ChatMessage {
     private Date timestamp;
 
 
-    private Long reciverId;
+    private Long receiverId;
+
 
 
 

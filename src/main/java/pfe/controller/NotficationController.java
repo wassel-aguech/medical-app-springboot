@@ -17,32 +17,26 @@ public class NotficationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping(value = "/notifications/{medecinId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribeToNotifications(@PathVariable Long medecinId) {
-        // ⏱️ Timeout désactivé (0L signifie infini)
+    @GetMapping(value = "/notifications/{destinataireId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter subscribeToNotifications(@PathVariable Long destinataireId) {
         SseEmitter emitter = new SseEmitter(0L);
 
-        // 🔔 S'abonner
-        notificationService.subscribe(medecinId, emitter);
+        notificationService.subscribe(destinataireId, emitter);
 
-        // 👂 Log en cas de fermeture normale
-        emitter.onCompletion(() -> System.out.println("✅ SSE complété pour médecin " + medecinId));
+        emitter.onCompletion(() -> System.out.println("✅ SSE complété pour médecin " + destinataireId));
 
-        // ❌ Log en cas de timeout (inutile ici vu qu'on a mis 0L, mais utile si tu remets un timeout plus tard)
         emitter.onTimeout(() -> {
-            System.out.println("⚠️ Timeout SSE pour médecin " + medecinId);
+            System.out.println("⚠️ Timeout SSE pour médecin " + destinataireId);
             emitter.complete();
         });
 
-        // 🛑 Log en cas d'erreur
         emitter.onError((e) -> {
-            System.out.println("💥 Erreur SSE pour médecin " + medecinId + " : " + e.getMessage());
+            System.out.println("💥 Erreur SSE pour médecin " + destinataireId + " : " + e.getMessage());
             emitter.completeWithError(e);
         });
 
         return emitter;
     }
-
 
 
     @PutMapping("/{id}/read")
@@ -55,7 +49,7 @@ public class NotficationController {
 
     @GetMapping("/all/{medecinId}")
     public ResponseEntity<List<Notification>> getAllByMedecin(@PathVariable Long medecinId) {
-        List<Notification> list = notificationService.getAllNotificationsByMedecin(medecinId);
+        List<Notification> list = notificationService.getAllNotificationsByDestinataire(medecinId);
         return ResponseEntity.ok(list);
     }
 }
