@@ -38,6 +38,7 @@ public class MedecinDto extends RegisterRequest {
 				.image(request.getImage())
 				.status(request.getStatus())
 				.etat(request.getEtat())
+				.cin(request.getCin())
 				.build();
 
 	}
@@ -55,6 +56,7 @@ public class MedecinDto extends RegisterRequest {
 				.image(request.getImage())
 				.status(request.getStatus())
 				.etat(request.getEtat())
+				.cin(request.getCin())
 				
 				.build();
 

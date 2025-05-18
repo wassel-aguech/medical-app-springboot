@@ -189,7 +189,9 @@ if (userRequest instanceof PatientDto) {
     var claims = new HashMap<String, Object>();
     claims.put("fullname", user.getFirstName() + " " + user.getLastName());
     claims.put("userId", user.getId());
-    var jwtToken = jwtService.generateToken(claims,user);
+    claims.put("cin", user.getCin()); // ✅ Ajout du CIN
+
+      var jwtToken = jwtService.generateToken(claims,user);
     //var jwtToken = jwtService.generateToken(user);
    
     var refreshToken = jwtService.generateRefreshToken(user);

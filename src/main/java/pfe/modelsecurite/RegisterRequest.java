@@ -22,6 +22,7 @@ public class RegisterRequest {
 	private String password;
 	private String adress;
 	private String phone;
+	private Long cin;
 	private Set<String> roles;
 	/*private String cin;
 	private String diplome;

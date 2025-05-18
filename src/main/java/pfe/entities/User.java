@@ -38,6 +38,8 @@ public class User implements UserDetails {
     private String adress;
     @Column
     private String phone;
+    @Column
+    private Long cin;
 
 
 

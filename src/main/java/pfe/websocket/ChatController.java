@@ -42,7 +42,7 @@ public class ChatController {
     @SendTo("/topic/messages")
     public ChatMessage sendMessage(ChatMessage message) {
         System.out.println("✅ Message reçu : " + message.getContent());
-        System.out.println("🚩 ReceiverId reçu : " + message.getReceiverId());  // <-- ici
+        System.out.println("🚩 ReceiverId reçu : " + message.getReceiverId());
 
         String notifMessage = "💬 Nouveau message de " + message.getSender();
 
@@ -53,7 +53,6 @@ public class ChatController {
         );
 
         System.out.println("📤 Notification envoyée au destinataire ID : " + message.getReceiverId());
-
         return message;
     }
 }

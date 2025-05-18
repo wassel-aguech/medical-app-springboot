@@ -29,6 +29,7 @@ public static Patient toEntity(PatientDto request) {
 			.sexe(request.getSexe())
 			.image(request.getImage())
 			.phone(request.getPhone())
+			.cin(request.getCin())
 			.build();
 
 }
@@ -44,6 +45,7 @@ public static PatientDto toDto(Patient request)
 			.sexe(request.getSexe())
 			.image(request.getImage())
 			.phone(request.getPhone())
+			.cin(request.getCin())
 			.build();
 
 }
