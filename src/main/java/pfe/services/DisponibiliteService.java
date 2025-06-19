@@ -4,6 +4,7 @@ import pfe.dto.DisponibiliteDto;
 import pfe.dto.MedecinDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DisponibiliteService {
 
@@ -17,5 +18,8 @@ public interface DisponibiliteService {
     DisponibiliteDto updateDisponibilite (DisponibiliteDto disponibiliteDto);
 
     List<DisponibiliteDto> getDisponibilitesByMedecinId(Long medecinId);
+
+    Optional<DisponibiliteDto> getDisponibiliteById(Long id);
+
 
 }

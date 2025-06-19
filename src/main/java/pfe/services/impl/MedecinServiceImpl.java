@@ -74,26 +74,6 @@ public class MedecinServiceImpl implements MedecinService {
 
 
 
-   /* @Override
-    public MedecinDto updateMedecin(MedecinDto medecinDto) {
-        Medecin existing = medecinRepository.findById(medecinDto.getId())
-                .orElseThrow(() -> new RuntimeException("Médecin non trouvé"));
-
-        existing.setFirstName(medecinDto.getFirstName());
-        existing.setLastName(medecinDto.getLastName());
-        existing.setEmail(medecinDto.getEmail());
-        existing.setPassword(medecinDto.getPassword());
-        existing.setAdress(medecinDto.getAdress());
-        existing.setPhone(medecinDto.getPhone());
-        existing.setSpecialite(medecinDto.getSpecialite());
-        existing.setStatus(medecinDto.getStatus());
-        existing.setImage(medecinDto.getImage());
-
-
-
-        medecinRepository.save(existing);
-        return MedecinDto.toDto(existing);
-    }*/
 
     @Override
     public MedecinDto updateMedecin(MedecinDto medecinDto) {

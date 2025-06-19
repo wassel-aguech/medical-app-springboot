@@ -13,6 +13,7 @@ import pfe.services.DisponibiliteService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,6 +82,13 @@ public class DisponibilireServiceImpl implements DisponibiliteService {
     }
 
 
+
+
+
+    @Override
+    public  Optional<DisponibiliteDto> getDisponibiliteById(Long id) {
+        return disponibiliteRepository.findById(id).map(DisponibiliteDto::toDto);
+    }
 
 
 }

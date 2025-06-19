@@ -10,6 +10,7 @@ import pfe.repository.DisponibiliteRepository;
 import pfe.services.DisponibiliteService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/disponibilites")
@@ -25,10 +26,21 @@ public class DisponibiliteController {
         return disponibiliteService.addDisponibilite(disponibiliteDto);
     }
 
-    @GetMapping("/getallmedecins")
+    @GetMapping("/getalldesponibilte")
     public ResponseEntity<List<DisponibiliteDto>> getAllDisponibilites() {
         return ResponseEntity.ok(disponibiliteService.getAllDisponibilite());
     }
+
+
+    @GetMapping("/getDisponibiliteById/{id}")
+    public ResponseEntity<DisponibiliteDto> getdisponibiliteById(@PathVariable Long id) {
+        Optional<DisponibiliteDto> dsponibilite = disponibiliteService.getDisponibiliteById(id);
+        return dsponibilite.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+
+
 
     @DeleteMapping("/deleteDisponibilite/{id}")
     public ResponseEntity<Void> deleteDisponibilite(@PathVariable Long id) {

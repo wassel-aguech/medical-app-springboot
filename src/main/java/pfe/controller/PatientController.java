@@ -48,7 +48,6 @@ public class PatientController {
         patientService.deletePatient(id);
     }
 
-
     @PutMapping("updatePatient")
     public PatientDto updatePatient(@RequestBody PatientDto patientdto) {
         return patientService.updatePatient(patientdto);

@@ -56,12 +56,62 @@ public class PatientServiceImpl  implements PatientService {
         patientRepository.deleteById(id);
     }
 
-    @Override
+   /* @Override
     public PatientDto updatePatient(PatientDto patientdto) {
         Patient patient = PatientDto.toEntity(patientdto);
         patient = patientRepository.save(patient);
         return PatientDto.toDto(patient);
+    }*/
+
+
+    @Override
+    public PatientDto updatePatient(PatientDto patientdto) {
+        Patient existing = patientRepository.findById(patientdto.getId())
+                .orElseThrow(() -> new RuntimeException("Patient non trouvé"));
+
+        if (patientdto.getFirstName() != null) {
+            existing.setFirstName(patientdto.getFirstName());
+        }
+        if (patientdto.getLastName() != null) {
+            existing.setLastName(patientdto.getLastName());
+        }
+        if (patientdto.getEmail() != null) {
+            existing.setEmail(patientdto.getEmail());
+        }
+        if (patientdto.getPassword() != null) {
+            existing.setPassword(patientdto.getPassword());
+        }
+        if (patientdto.getAdress() != null) {
+            existing.setAdress(patientdto.getAdress());
+        }
+        if (patientdto.getPhone() != null) {
+            existing.setPhone(patientdto.getPhone());
+        }
+
+        if (patientdto.getImage() != null) {
+            existing.setImage(patientdto.getImage());
+        }
+
+        patientRepository.save(existing);
+        return PatientDto.toDto(existing);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
